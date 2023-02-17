@@ -6,6 +6,9 @@ const pokemonAPI = axios.create({
 
 const get = async (endpoint) => {
   const response = await pokemonAPI.get(endpoint);
+  if (endpoint.includes('pokedex')) {
+    await delay(500);
+  }
   return response.data;
 };
 

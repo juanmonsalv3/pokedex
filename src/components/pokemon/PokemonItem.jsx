@@ -3,12 +3,16 @@ import classnames from 'tailwindcss-classnames';
 import { PokemonContext } from '../../context/PokemonContext';
 import { formatEntryNumber } from '../../helpers/format';
 
-const PokemonItem = ({ name, number }) => {
+const PokemonItem = ({ name, number, gridView }) => {
   const { selectedPokemonId, setSelectedPokemonId } =
     useContext(PokemonContext);
   const entry = formatEntryNumber(number);
   return (
-    <li className={classnames('flex grow flex-wrap text-lg text-white ')}>
+    <li
+      className={classnames('flex grow flex-wrap text-lg text-white ', {
+        'shrink-0 grow-0 basis-1/5': gridView,
+      })}
+    >
       <div
         className={classnames(
           'justify-stretch mx-4 flex grow basis-full cursor-pointer rounded bg-red-400 shadow-xl',

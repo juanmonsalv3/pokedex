@@ -14,6 +14,8 @@ import { formatEntryNumber } from '../../helpers/format';
 const PokemonDetails = () => {
   const { selectedPokemonId } = useContext(PokemonContext);
 
+  if (!selectedPokemonId) return null;
+
   const { pokemonData, isPokemonLoading, pokemonError } =
     usePokemon(selectedPokemonId);
   const { pokemonSpeciesData: species } = usePokemonSpecies(selectedPokemonId);
@@ -31,7 +33,9 @@ const PokemonDetails = () => {
           <div className="flex items-center justify-between border-b-2 border-slate-300 p-2">
             <h2 className="text-2xl capitalize">N° {entry}</h2>
             <h2 className="m-auto text-center text-2xl capitalize">{name}</h2>
-            <h2 className="m-auto text-left text-2xl capitalize">Evolution Chain</h2>
+            <h2 className="m-auto text-left text-2xl capitalize">
+              Evolution Chain
+            </h2>
           </div>
           <div className="relative flex">
             <div className="absolute top-2 left-4 flex shrink flex-col gap-1 gap-x-4">

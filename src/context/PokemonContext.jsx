@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 export const PokemonContext = createContext({});
 
 const PokemonProvider = ({ children }) => {
-  const [selectedPokemonId, setSelectedPokemonId] = useState(1);
+  const [selectedPokemonId, setSelectedPokemonId] = useState(null);
   const [pokemonList, setPokemonList] = useState([]);
   return (
     <PokemonContext.Provider

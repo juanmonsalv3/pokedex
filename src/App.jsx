@@ -10,7 +10,7 @@ preload('pokemon/1', pokemonAPI.get);
 
 function App() {
   return (
-    <div className="App flex flex-row-reverse justify-between">
+    <div className="App flex justify-between">
       <PokemonProvider>
         <PokemonDetails />
         <PokemonList />
