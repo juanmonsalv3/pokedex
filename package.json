@@ -1,6 +1,7 @@
 {
   "name": "pokedex",
   "private": true,
+  "homepage": "https://www.juanmonsalve.dev/pokedex/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
