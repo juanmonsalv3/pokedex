@@ -13,11 +13,10 @@ import { formatEntryNumber } from '../../helpers/format';
 
 const PokemonDetails = () => {
   const { selectedPokemonId } = useContext(PokemonContext);
-  const deferredId = useDeferredValue(selectedPokemonId);
 
   const { pokemonData, isPokemonLoading, pokemonError } =
-    usePokemon(deferredId);
-  const { pokemonSpeciesData: species } = usePokemonSpecies(deferredId);
+    usePokemon(selectedPokemonId);
+  const { pokemonSpeciesData: species } = usePokemonSpecies(selectedPokemonId);
 
   if (isPokemonLoading || !pokemonData) return <LoadingSpinner />;
   if (pokemonError) return <div className="grow">Error loading</div>;
