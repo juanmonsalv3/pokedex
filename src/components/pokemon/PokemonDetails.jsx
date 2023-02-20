@@ -43,7 +43,7 @@ const PokemonDetails = () => {
                 <PokemonType name={type.name} key={type.name} />
               ))}
             </div>
-            <div className="m-auto w-[30rem] grow-0 p-16">
+            <div className="ml-auto w-[30rem] grow-0 p-16">
               <img
                 src={`https://raw.githubusercontent.com/juanmonsalv3/PokemonImages/master/assets/images/${entry}.png`}
                 alt={name}

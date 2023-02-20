@@ -28,14 +28,14 @@ const EvolutionHierarchy = ({ evolutionData, head = false }) => {
           onClick={() => setSelectedPokemonId(id)}
         >
           <img
-            className="w-12 grow-0"
+            className="w-20 grow-0 pl-2"
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
             alt={name}
           />
           <span className="item-start grow self-center text-left text-xl capitalize">
             {name}
           </span>
-          <span className="flex self-start p-1 text-sm leading-none">
+          <span className="flex self-start p-1 text-md leading-none">
             N°{entry}
           </span>
         </div>

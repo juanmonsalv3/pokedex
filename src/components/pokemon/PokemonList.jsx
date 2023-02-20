@@ -22,12 +22,14 @@ const PokemonList = () => {
     <div
       className={classnames('flex  flex-wrap', {
         'flex-row': gridView,
-        'max-h-screen overflow-scroll basis-3/12 items-stretch order-first': !gridView,
+        'order-first max-h-screen basis-3/12 items-stretch overflow-scroll':
+          !gridView,
       })}
     >
       <ul
         className={classnames('mt-4 flex flex-wrap gap-y-4 text-center', {
           'grow items-stretch': gridView,
+          'flex-col grow': !gridView,
         })}
       >
         {pokemonList.map((pokemon) => (
