@@ -7,21 +7,19 @@ const PokemonItem = ({ name, number, gridView }) => {
   const { selectedPokemonId, setSelectedPokemonId } =
     useContext(PokemonContext);
   const entry = formatEntryNumber(number);
+  const selected = selectedPokemonId === number;
   return (
     <li
-      className={classnames(
-        'flex shrink-0 grow flex-wrap text-lg text-white',
-        {
-          'shrink-0 grow-0 basis-1/5': gridView,
-        },
-      )}
+      className={classnames('flex shrink-0 grow flex-wrap text-lg text-white', {
+        'shrink-0 grow-0 basis-1/5': gridView,
+      })}
     >
       <div
         className={classnames(
-          'justify-stretch mx-6 flex grow basis-full cursor-pointer rounded bg-slate-400 shadow-xl',
+          'justify-stretch mx-3 flex grow basis-full cursor-pointer rounded-lg bg-slate-400 shadow shadow-gray-900',
           {
-            'bg-slate-500 outline outline-3 outline-slate-700 scale-105':
-              selectedPokemonId === number,
+            'outline-3 translate-x-2 bg-slate-500 shadow outline outline-slate-700':
+              selected,
           },
         )}
         onClick={() => setSelectedPokemonId(number)}
@@ -34,7 +32,7 @@ const PokemonItem = ({ name, number, gridView }) => {
         <span className="item-start grow self-center text-left text-xl capitalize">
           {name}
         </span>
-        <span className="text-md flex self-start p-1 leading-none">
+        <span className="text-md flex self-start p-4 leading-none">
           N°{entry}
         </span>
       </div>

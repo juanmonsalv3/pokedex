@@ -6,7 +6,7 @@ const usePokemonSpecies = (pokemonId) => {
     isLoading,
     error,
     data: pokemonSpeciesData,
-  } = useSWR(`pokemon-species/${pokemonId}`, pokemonAPI.get);
+  } = useSWR(pokemonId ? `pokemon-species/${pokemonId}` : null, pokemonAPI.get);
 
   return { isLoading, error, pokemonSpeciesData };
 };

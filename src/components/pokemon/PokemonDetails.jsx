@@ -14,13 +14,14 @@ import { formatEntryNumber } from '../../helpers/format';
 const PokemonDetails = () => {
   const { selectedPokemonId } = useContext(PokemonContext);
 
-  if (!selectedPokemonId) return null;
 
   const { pokemonData, isPokemonLoading, pokemonError } =
     usePokemon(selectedPokemonId);
   const { pokemonSpeciesData: species } = usePokemonSpecies(selectedPokemonId);
+  
+  if (!selectedPokemonId) return null;
 
-  if (isPokemonLoading || !pokemonData) return <LoadingSpinner />;
+  if (isPokemonLoading || !pokemonData) return <div className="grow">Loading</div>;
   if (pokemonError) return <div className="grow">Error loading</div>;
 
   const { id, name, types } = pokemonData;
@@ -38,12 +39,12 @@ const PokemonDetails = () => {
             </h2>
           </div>
           <div className="relative flex">
-            <div className="absolute top-2 left-4 flex shrink flex-col gap-1 gap-x-4">
+            <div className="absolute top-2 flex shrink flex-col gap-1 gap-x-4">
               {types.map(({ type }) => (
                 <PokemonType name={type.name} key={type.name} />
               ))}
             </div>
-            <div className="ml-auto w-[30rem] grow-0 p-16">
+            <div className="m-auto w-[30rem] grow-0 p-12">
               <img
                 src={`https://raw.githubusercontent.com/juanmonsalv3/PokemonImages/master/assets/images/${entry}.png`}
                 alt={name}

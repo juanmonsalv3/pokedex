@@ -3,8 +3,8 @@ import pokemonAPI from '../api/pokemonAPI';
 
 const usePokemon = (pokemonId) => {
   const { isLoading, error, data } = useSWR(
-    `pokemon/${pokemonId}`,
-    pokemonAPI.get
+    pokemonId ? `pokemon/${pokemonId}` : null,
+    pokemonAPI.get,
   );
 
   return {

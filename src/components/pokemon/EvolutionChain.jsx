@@ -5,7 +5,6 @@ import pokemonAPI from '../../api/pokemonAPI';
 import { PokemonContext } from '../../context/PokemonContext';
 import usePokemonSpecies from '../../custom_hooks/usePokemonSpecies';
 import { formatEntryNumber } from '../../helpers/format';
-import LoadingSpinner from '../common/LoadingSpinner';
 
 const EvolutionHierarchy = ({ evolutionData, head = false }) => {
   const { setSelectedPokemonId } = useContext(PokemonContext);
@@ -35,7 +34,7 @@ const EvolutionHierarchy = ({ evolutionData, head = false }) => {
           <span className="item-start grow self-center text-left text-xl capitalize">
             {name}
           </span>
-          <span className="flex self-start p-1 text-md leading-none">
+          <span className="text-md flex self-start p-1 leading-none">
             N°{entry}
           </span>
         </div>
@@ -55,10 +54,9 @@ const EvolutionChain = React.memo(({ evolutionUrl }) => {
     isLoading,
   } = useSWR(evolutionUrl, pokemonAPI.get, {});
 
-  if (isLoading || !evolutionData) return <LoadingSpinner />;
+  if (isLoading || !evolutionData) return <div>Error loading</div>;
   if (error) return <div>Error loading</div>;
 
-  console.log(evolutionData);
   const evolutionChain = evolutionData.chain;
 
   if (!evolutionChain || evolutionChain.evolves_to.length == 0)
