@@ -64,6 +64,11 @@ const EvolutionChain = React.memo(({ evolutionUrl }) => {
 
   return (
     <div className="shrink-0 basis-1/3">
+      <div className="flex items-center justify-between border-b-2 border-slate-300 p-2">
+        <h2 className="m-auto text-left text-2xl capitalize">
+          Evolution Chain
+        </h2>
+      </div>
       <EvolutionHierarchy evolutionData={evolutionData.chain} head />
     </div>
   );

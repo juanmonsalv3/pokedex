@@ -1,18 +1,22 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import classnames from 'tailwindcss-classnames';
 import { PokemonContext } from '../../context/PokemonContext';
 import { formatEntryNumber } from '../../helpers/format';
 
-const PokemonItem = ({ name, number, gridView }) => {
+const PokemonItem = ({ name, number, gridView, onSelectPokemon }) => {
   const { selectedPokemonId, setSelectedPokemonId } =
     useContext(PokemonContext);
   const entry = formatEntryNumber(number);
   const selected = selectedPokemonId === number;
   return (
     <li
-      className={classnames('flex shrink-0 grow flex-wrap text-lg text-white', {
-        'shrink-0 grow-0 basis-1/5': gridView,
-      })}
+      className={classnames(
+        'flex shrink-0 grow flex-wrap pt-1 text-lg text-white',
+        {
+          'shrink-0 grow-0 basis-1/5': gridView,
+        },
+      )}
+      data-pokemon-id={number}
     >
       <div
         className={classnames(
