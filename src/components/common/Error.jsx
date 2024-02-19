@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import classnames from 'tailwindcss-classnames';
-import img from '../../assets/pikachu-running.gif';
+import img from '../../assets/pikabye.gif';
 
-const LoadingSpinner = ({ fullContainer }) => {
+const ErrorMessage = ({ fullContainer }) => {
   const content = (
     <div
       className={classnames(
@@ -23,4 +23,4 @@ const LoadingSpinner = ({ fullContainer }) => {
   return content;
 };
 
-export default LoadingSpinner;
+export default ErrorMessage;

@@ -1,61 +1,57 @@
-import PokemonItem from './PokemonItem';
-import useSWR from 'swr';
-import { useContext, useEffect, useLayoutEffect, useRef } from 'react';
-import { PokemonContext } from '../../context/PokemonContext';
-import pokemonAPI from '../../api/pokemonAPI';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useCallback, useMemo, useRef } from 'react';
+import ErrorMessage from '../common/Error';
 import LoadingSpinner from '../common/LoadingSpinner';
-import classnames from 'tailwindcss-classnames';
+import PokemonCard from './PokemonCard';
 
 const PokemonList = () => {
-  const { selectedPokemonId } = useContext(PokemonContext);
-  const listRef = useRef(null);
+  const { data, isLoading, isError, isFetching, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ['pokemonList'],
+      queryFn: ({
+        pageParam = 'https://pokeapi.co/api/v2/pokemon/?limit=40',
+      }) => axios.get(pageParam).then((res) => res.data),
+      getNextPageParam: (lastPage) => lastPage.next,
+    });
 
-  const gridView = !selectedPokemonId;
+  const observer = useRef();
+  const lastElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetching) {
+          fetchNextPage();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasNextPage],
+  );
 
-  const { isLoading, error, data } = useSWR('pokedex/2', pokemonAPI.get, {});
+  const results = useMemo(
+    () => (data ? data.pages.map((p) => p.results).flat() : []),
+    [data],
+  );
 
-  useEffect(() => {
-    if (listRef.current) listRef.current.addEventListener('keyup', console.log);
-  }, []);
+  if (isLoading) {
+    return <LoadingSpinner fullContainer />;
+  }
 
-  useLayoutEffect(() => {
-    if (selectedPokemonId) {
-      const element = document.querySelector(
-        `[data-pokemon-id="${selectedPokemonId}"]`,
-      );
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [selectedPokemonId]);
-
-  if (isLoading || !data) return <LoadingSpinner />;
-  if (error) return <div>Error loading</div>;
-
-  const pokemonList = data.pokemon_entries;
+  if (isError) {
+    return <ErrorMessage fullContainer />;
+  }
 
   return (
-    <div
-      ref={listRef}
-      className={classnames('flex  flex-wrap', {
-        'flex-row': gridView,
-        'max-h-screen basis-3/12 items-stretch overflow-scroll':
-          !gridView,
-      })}
-    >
-      <ul
-        className={classnames('mt-4 flex flex-wrap gap-y-2 text-center', {
-          'grow items-stretch': gridView,
-          'grow flex-col': !gridView,
-        })}
-      >
-        {pokemonList.map((pokemon) => (
-          <PokemonItem
-            gridView={gridView}
-            key={pokemon.entry_number}
-            number={pokemon.entry_number}
-            {...pokemon.pokemon_species}
-          />
-        ))}
-      </ul>
+    <div className="flex max-h-screen flex-row flex-wrap justify-start gap-y-4 overflow-y-scroll">
+      {results.map((result, i) => (
+        <PokemonCard
+          key={result.name}
+          {...result}
+          ref={results.length === i + 1 ? lastElementRef : null}
+        ></PokemonCard>
+      ))}
     </div>
   );
 };

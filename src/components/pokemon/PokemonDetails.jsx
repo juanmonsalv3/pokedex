@@ -1,60 +1,43 @@
-import { Suspense, useContext, useDeferredValue } from 'react';
-
-import LoadingSpinner from '../common/LoadingSpinner';
-import PokemonType from './PokemonType';
-import EvolutionChain from './EvolutionChain';
-
-import { PokemonContext } from '../../context/PokemonContext';
-
-import usePokemon from '../../custom_hooks/usePokemon';
-import usePokemonSpecies from '../../custom_hooks/usePokemonSpecies';
-
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import { formatEntryNumber } from '../../helpers/format';
+import { usePokemonStore } from '../../store/pokemonStore';
+import PokemonImage from './PokemonImage';
 
 const PokemonDetails = () => {
-  const { selectedPokemonId } = useContext(PokemonContext);
+  const selectedPokemonId = usePokemonStore((state) => state.selectedPokemonId);
+  const id = formatEntryNumber(selectedPokemonId);
 
-  const { pokemonData, isPokemonLoading, pokemonError } =
-    usePokemon(selectedPokemonId);
-  const { pokemonSpeciesData: species } = usePokemonSpecies(selectedPokemonId);
+  const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${selectedPokemonId}/`;
 
-  if (!selectedPokemonId) return null;
+  const { data: speciesData } = useQuery({
+    queryKey: [speciesUrl],
+    queryFn: () => axios.get(speciesUrl).then((response) => response.data),
+  });
 
-  if (isPokemonLoading || !pokemonData)
-    return <div className="grow">Loading</div>;
-  if (pokemonError) return <div className="grow">Error loading</div>;
+  console.log(speciesData);
+  if (!speciesData) return <div className="w-80 flex-shrink-0"></div>;
 
-  const { id, name, types } = pokemonData;
-  const entry = formatEntryNumber(id);
+  const description = speciesData.flavor_text_entries
+    .filter((t) => t.language.name === 'en')
+    .pop();
+
+  const genera = speciesData.genera.find((g) => g.language.name === 'en');
 
   return (
-    <div className="max-h-screen grow flex">
-      <Suspense fallback={<LoadingSpinner />}>
-        <div className="basis-2/3">
-          <div className="flex items-center justify-between border-b-2 border-slate-300 p-2">
-            <h2 className="text-2xl capitalize">N° {entry}</h2>
-            <h2 className="m-auto text-center text-2xl capitalize">{name}</h2>
-          </div>
-          <div className="relative flex">
-            <div className="absolute top-2 flex shrink flex-col gap-1 gap-x-4">
-              {types.map(({ type }) => (
-                <PokemonType name={type.name} key={type.name} />
-              ))}
-            </div>
-            <div className="m-auto w-[30rem] grow-0 p-12">
-              <img
-                src={`https://raw.githubusercontent.com/juanmonsalv3/PokemonImages/master/assets/images/${entry}.png`}
-                alt={name}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="basis-1/3">
-          {species && species.evolution_chain && (
-            <EvolutionChain evolutionUrl={species.evolution_chain.url} />
-          )}
-        </div>
-      </Suspense>
+    <div className="flex w-80 flex-shrink-0 flex-col content-center">
+      <div className="">
+        <PokemonImage className="m-auto" id={id} name={speciesData.name} />
+      </div>
+      <div className="text-center font-medium text-slate-400">#{id}</div>
+      
+      <div className="text-center text-3xl font-bold capitalize">
+        {speciesData.name}
+      </div>
+      <div className="text-center text-sm font-light capitalize">
+        {genera.genus}
+      </div>
+      <p>{description.flavor_text}</p>
     </div>
   );
 };

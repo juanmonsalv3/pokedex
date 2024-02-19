@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 import classnames from 'tailwindcss-classnames';
 
 export const colors = {
@@ -21,15 +23,21 @@ export const colors = {
   fairy: 'bg-pink-400',
 };
 
-const PokemonType = ({ name }) => {
+const PokemonType = ({ name, url }) => {
+  const { data } = useQuery({
+    queryKey: [url],
+    queryFn: () => axios.get(url),
+  });
+
+  if (!data) return null;
   return (
-    <div className='flex items-center bg-slate-400 text-white pr-2'>
-      <img
-        className={classnames('w-12 mr-2 p-2', colors[name])}
-        src={`https://raw.githubusercontent.com/juanmonsalv3/PokemonImages/master/assets/Others/type-icons/${name}.svg`}
-        alt={name + ' type'}
-      />
-      <span className='capitalize text-2xl text-left'>{name}</span>
+    <div
+      className={classnames(
+        'flex justify-center px-4 text-white rounded py-1',
+        colors[name],
+      )}
+    >
+      <span className="text-center uppercase text-sm">{name}</span>
     </div>
   );
 };

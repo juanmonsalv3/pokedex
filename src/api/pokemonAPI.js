@@ -18,6 +18,12 @@ const delay = async (time = 1000) => {
   });
 };
 
+const getPokemonList = async () => {
+  const response = await axios.get('pokemon/');
+  return response.data;
+};
+
 export default {
   get,
+  getPokemonList
 };

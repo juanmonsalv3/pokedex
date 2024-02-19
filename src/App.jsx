@@ -1,22 +1,18 @@
-import { preload } from 'swr';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import PokemonDetails from './components/pokemon/PokemonDetails';
-import PokemonList from './components/pokemon/PokemonList';
-import PokemonProvider from './context/PokemonContext';
-import pokemonAPI from './api/pokemonAPI';
-import PokemonFilters from './components/pokemon/PokemonFilters';
+import Pokedex from './components/pokemon/Pokedex';
 
-preload('pokedex/2', pokemonAPI.get);
-preload('pokemon/1', pokemonAPI.get);
+// Create a client
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className="App flex justify-between flex-wrap">
-      <PokemonProvider>
-        {/* <PokemonFilters /> */}
-        <PokemonList />
-        <PokemonDetails />
-      </PokemonProvider>
+    <div className="min-h-screen bg-gray-100 ">
+      <div className="container mx-auto min-h-full ">
+        <QueryClientProvider client={queryClient}>
+          <Pokedex />
+        </QueryClientProvider>
+      </div>
     </div>
   );
 }
