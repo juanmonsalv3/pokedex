@@ -4,7 +4,7 @@ import PokemonList from './PokemonList';
 
 export default function Pokedex() {
   return (
-    <div className='flex flex-row flex-nowrap'>
+    <div className='flex flex-row flex-nowrap gap-8'>
       <PokemonDetails />
       <PokemonList />
     </div>

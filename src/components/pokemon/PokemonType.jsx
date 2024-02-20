@@ -33,7 +33,7 @@ const PokemonType = ({ name, url }) => {
   return (
     <div
       className={classnames(
-        'flex justify-center px-4 text-white rounded py-1',
+        'flex justify-center px-2 text-white rounded py-1',
         colors[name],
       )}
     >

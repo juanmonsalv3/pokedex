@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useCallback, useMemo, useRef } from 'react';
+import { BASE_API_URL } from '../../constants';
 import ErrorMessage from '../common/Error';
 import LoadingSpinner from '../common/LoadingSpinner';
 import PokemonCard from './PokemonCard';
@@ -9,9 +10,8 @@ const PokemonList = () => {
   const { data, isLoading, isError, isFetching, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: ['pokemonList'],
-      queryFn: ({
-        pageParam = 'https://pokeapi.co/api/v2/pokemon/?limit=40',
-      }) => axios.get(pageParam).then((res) => res.data),
+      queryFn: ({ pageParam = `${BASE_API_URL}/pokemon/?limit=12` }) =>
+        axios.get(pageParam).then((res) => res.data),
       getNextPageParam: (lastPage) => lastPage.next,
     });
 
@@ -44,7 +44,7 @@ const PokemonList = () => {
   }
 
   return (
-    <div className="flex max-h-screen flex-row flex-wrap justify-start gap-y-4 overflow-y-scroll">
+    <div className="flex max-h-screen flex-row flex-wrap justify-start overflow-y-scroll">
       {results.map((result, i) => (
         <PokemonCard
           key={result.name}
