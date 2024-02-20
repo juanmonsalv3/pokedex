@@ -4,8 +4,9 @@ import React from 'react';
 import PokemonImage from './PokemonImage';
 
 const EvolutionCondition = ({ evolutionDetails }) => {
+  console.log(evolutionDetails);
   return (
-    <div className="text-xs mr-4">
+    <div className="mr-4 text-xs">
       {evolutionDetails.min_level && (
         <div>Min lvl: {evolutionDetails.min_level}</div>
       )}
@@ -19,9 +20,8 @@ const EvolutionCondition = ({ evolutionDetails }) => {
       {evolutionDetails.min_happiness && (
         <div>Min Happines: {evolutionDetails.min_happiness}</div>
       )}
-      {evolutionDetails.time_of_day && (
-        <div>Time of day: {evolutionDetails.time_of_day}</div>
-      )}
+      {evolutionDetails.trigger.name === 'other' && <div>Other</div>}
+      {evolutionDetails.trigger.name === 'trade' && <div>Trade</div>}
     </div>
   );
 };
@@ -40,7 +40,7 @@ const EvolutionDetails = ({ evolutionData }) => {
 
   const evolutionDetails = evolutionData.evolution_details ?? [];
   return (
-    <div className="flex flex-row justify-center items-center">
+    <div className="flex flex-row items-center justify-center">
       <div>
         {evolutionDetails.length > 0 &&
           evolutionDetails.map((e) => (
@@ -54,7 +54,9 @@ const EvolutionDetails = ({ evolutionData }) => {
             url={pokemon.sprites.front_default}
           />
         </div>
-        <div className="m-auto text-xs capitalize font-bold">{pokemon.name}</div>
+        <div className="m-auto text-xs font-bold capitalize">
+          {pokemon.name}
+        </div>
       </div>
       {evolutionData.evolves_to.length > 0 && (
         <div className="flex flex-col justify-between gap-4">
