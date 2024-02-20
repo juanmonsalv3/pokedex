@@ -4,6 +4,7 @@ import { BASE_API_URL } from '../../constants';
 import { formatEntryNumber } from '../../helpers/format';
 import { usePokemonStore } from '../../store/pokemonStore';
 import EvolutionChain from './EvolutionChain';
+import PokemonDetailsSkeleton from './PokemonDetailsSkeleton';
 import PokemonImage from './PokemonImage';
 import PokemonType from './PokemonType';
 
@@ -25,7 +26,7 @@ const PokemonDetails = () => {
   });
 
   if (!speciesData || !pokemonData)
-    return <div className=" w-1/3 flex-shrink-0"></div>;
+    return <PokemonDetailsSkeleton/>;
 
   const description = speciesData.flavor_text_entries
     .filter((t) => t.language.name === 'en')
@@ -47,7 +48,6 @@ const PokemonDetails = () => {
       </div>
       <div className="rounded-xl bg-white px-8 pt-16 pb-8">
         <div className="text-center font-medium text-slate-400">#{id}</div>
-
         <div className="text-center text-4xl font-bold capitalize">
           {speciesData.name}
         </div>
