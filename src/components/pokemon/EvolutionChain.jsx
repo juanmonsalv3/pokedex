@@ -77,7 +77,7 @@ const EvolutionChain = React.memo(({ url }) => {
 
   if (!evolutionData || evolutionData.chain.evolves_to.length == 0)
     return (
-      <div className="shrink-0 basis-1/3">
+      <div className="shrink-0 basis-1/3 animate-pulse">
         <div class="h-8 rounded bg-slate-200"></div>
         <div class="mt-4 grid grid-cols-2 gap-4">
           <div class="col-span-1 h-2 rounded bg-slate-200"></div>

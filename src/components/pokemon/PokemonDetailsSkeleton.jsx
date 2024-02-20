@@ -23,7 +23,7 @@ import React from 'react';
 
 function PokemonDetailsSkeleton() {
   return (
-    <div className="mb-4 flex w-1/3 flex-shrink-0 flex-col content-center">
+    <div className="mb-4 flex w-1/3 flex-shrink-0 flex-col content-center animate-pulse">
       <div className="z-20 translate-y-14">
         <div className="mx-auto h-40 w-40">
           <div className="h-40 w-40 rounded-full bg-slate-200"></div>
@@ -37,9 +37,10 @@ function PokemonDetailsSkeleton() {
             <div class="col-span-1 h-4 rounded bg-slate-200"></div>
           </div>
           <div class="h-4 rounded bg-slate-200"></div>
-          <div class="h-4 rounded bg-slate-200"></div>
-          <div class="h-4 rounded bg-slate-200"></div>
-          <div class="h-4 rounded bg-slate-200"></div>
+          <div class="grid grid-cols-3 gap-4 mt-4">
+            <div class="col-span-1 h-4 rounded bg-slate-200"></div>
+            <div class="col-span-2 h-4 rounded bg-slate-200"></div>
+          </div>
           <div class="h-4 rounded bg-slate-200"></div>
         </div>
       </div>
