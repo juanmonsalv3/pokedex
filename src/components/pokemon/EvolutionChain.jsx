@@ -5,7 +5,7 @@ import PokemonImage from './PokemonImage';
 
 const EvolutionCondition = ({ evolutionDetails }) => {
   return (
-    <div className="text-xs text-center">
+    <div className="text-center text-xs">
       {evolutionDetails.min_level && (
         <div>Min lvl: {evolutionDetails.min_level}</div>
       )}
@@ -40,7 +40,7 @@ const EvolutionDetails = ({ evolutionData }) => {
   const evolutionDetails = evolutionData.evolution_details ?? [];
   return (
     <div className="flex flex-row items-center justify-center">
-      <div className='hidden md:flex'>
+      <div className="hidden md:flex">
         {evolutionDetails.length > 0 &&
           evolutionDetails.map((e, ix) => (
             <EvolutionCondition key={ix} evolutionDetails={e} />
@@ -69,12 +69,12 @@ const EvolutionDetails = ({ evolutionData }) => {
 };
 
 const EvolutionChain = React.memo(({ url }) => {
-  const { data: evolutionData } = useQuery({
+  const { data: evolutionData, isLoading } = useQuery({
     queryKey: [url],
     queryFn: () => axios.get(url).then((response) => response.data),
   });
 
-  if (!evolutionData || evolutionData.chain.evolves_to.length == 0)
+  if (isLoading)
     return (
       <div className="shrink-0 basis-1/3 animate-pulse">
         <div className="h-8 rounded bg-slate-200"></div>
@@ -86,6 +86,8 @@ const EvolutionChain = React.memo(({ url }) => {
         </div>
       </div>
     );
+
+  if (!evolutionData || evolutionData.chain.evolves_to.length == 0) return null;
 
   const evolutionChain = evolutionData.chain;
   return (
