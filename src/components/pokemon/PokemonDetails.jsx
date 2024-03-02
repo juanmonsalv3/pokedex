@@ -25,8 +25,7 @@ const PokemonDetails = () => {
     queryFn: () => axios.get(speciesUrl).then((response) => response.data),
   });
 
-  if (!speciesData || !pokemonData)
-    return <PokemonDetailsSkeleton/>;
+  if (!speciesData || !pokemonData) return <PokemonDetailsSkeleton />;
 
   const description = speciesData.flavor_text_entries
     .filter((t) => t.language.name === 'en')
@@ -35,7 +34,7 @@ const PokemonDetails = () => {
   const genera = speciesData.genera.find((g) => g.language.name === 'en');
 
   return (
-    <div className="mb-4 flex w-1/3 flex-shrink-0 flex-col content-center">
+    <div className="mb-4 flex flex-shrink-0 flex-col content-center md:w-5/12 lg:w-1/3 px-4">
       <div className="z-20 translate-y-14">
         <div className="mx-auto h-40 w-40">
           <PokemonImage
@@ -46,7 +45,7 @@ const PokemonDetails = () => {
           />
         </div>
       </div>
-      <div className="rounded-xl bg-white px-8 pt-16 pb-8">
+      <div className="rounded-xl bg-white px-8 pb-8 pt-16">
         <div className="text-center font-medium text-slate-400">#{id}</div>
         <div className="text-center text-4xl font-bold capitalize">
           {speciesData.name}

@@ -28,7 +28,7 @@ function PokemonCard({ url }, ref) {
   const id = formatEntryNumber(pokemonData.id);
   return (
     <div
-      className="flex shrink-0 grow-0 basis-1/3 flex-col items-center justify-center px-4"
+      className="flex shrink-0 grow-0 basis-1/2 lg:basis-1/3 flex-col items-center justify-center px-4"
       ref={ref}
     >
       <div

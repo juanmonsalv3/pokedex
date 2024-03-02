@@ -8,7 +8,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <div className="min-h-screen bg-gray-100 ">
-      <div className="container mx-auto min-h-full ">
+      <div className="xl:container mx-auto min-h-full ">
         <QueryClientProvider client={queryClient}>
           <Pokedex />
         </QueryClientProvider>

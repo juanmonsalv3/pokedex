@@ -4,9 +4,8 @@ import React from 'react';
 import PokemonImage from './PokemonImage';
 
 const EvolutionCondition = ({ evolutionDetails }) => {
-  console.log(evolutionDetails);
   return (
-    <div className="mr-4 text-xs">
+    <div className="text-xs text-center">
       {evolutionDetails.min_level && (
         <div>Min lvl: {evolutionDetails.min_level}</div>
       )}
@@ -41,10 +40,10 @@ const EvolutionDetails = ({ evolutionData }) => {
   const evolutionDetails = evolutionData.evolution_details ?? [];
   return (
     <div className="flex flex-row items-center justify-center">
-      <div>
+      <div className='hidden md:flex'>
         {evolutionDetails.length > 0 &&
-          evolutionDetails.map((e) => (
-            <EvolutionCondition evolutionDetails={e} />
+          evolutionDetails.map((e, ix) => (
+            <EvolutionCondition key={ix} evolutionDetails={e} />
           ))}
       </div>
       <div className="flex flex-col justify-center overflow-hidden">
@@ -78,12 +77,12 @@ const EvolutionChain = React.memo(({ url }) => {
   if (!evolutionData || evolutionData.chain.evolves_to.length == 0)
     return (
       <div className="shrink-0 basis-1/3 animate-pulse">
-        <div class="h-8 rounded bg-slate-200"></div>
-        <div class="mt-4 grid grid-cols-2 gap-4">
-          <div class="col-span-1 h-2 rounded bg-slate-200"></div>
-          <div class="col-span-1 h-2 rounded bg-slate-200"></div>
-          <div class="col-span-1 h-2 rounded bg-slate-200"></div>
-          <div class="col-span-1 h-2 rounded bg-slate-200"></div>
+        <div className="h-8 rounded bg-slate-200"></div>
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          <div className="col-span-1 h-2 rounded bg-slate-200"></div>
+          <div className="col-span-1 h-2 rounded bg-slate-200"></div>
+          <div className="col-span-1 h-2 rounded bg-slate-200"></div>
+          <div className="col-span-1 h-2 rounded bg-slate-200"></div>
         </div>
       </div>
     );
